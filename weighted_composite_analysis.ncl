@@ -1,3 +1,16 @@
+;***********************************************************************
+;NCL script for weighted composite analysis (WCA), written by Xie Zhiang, 2017/9/6
+;A NCL function for WCA with Mote Carlo two-tail test
+;You can use the function by output=weighted_composite_analysis(index,field,N,alpha)
+:where index is an index used as standard to tell positive and negative event, 
+;field is a field ready for composition, which must be 3D variable and the rightmost dimension must be same as length of index
+;N is the ensemble size of Mote Carlo test, 200 and above is recommended
+;alpha is the significant level for test
+;output contains two variable:
+;output[0] is the result of WCA, a 3D variable and you can find positive (0), negative (1), and difference (2) in rightmost demension, 
+;output[1] is the result of Monte Carlo two-tail test, +1 & -1 represent passing the significant test, 0 represents not passing the test. 
+
+;***********************************************************************
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"  
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"  
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"  
@@ -12,6 +25,8 @@ begin
 ;===================================================================
 ;----------------------------WCA-------------------------------------
 ;===================================================================
+
+
 windex=index_input-avg(index_input)
 
 ;dimension information
