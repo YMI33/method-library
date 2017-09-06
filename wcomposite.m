@@ -1,9 +1,10 @@
 function [difference sigcrit]=wcomposite(x,y,alpha0)
-%¼ÆËã¼ÓÈ¨ºÏ³É·ÖÎöµÄº¯Êý£¬²ÉÓÃË«²àÃÉÌØ¿¨Âå¼ìÑé
-%º¯ÊýÐÎÊ½ [WCA significance]=wcomposite(index,field,alpha0)
-%ÆäÖÐindexÎªÒ»Î¬Ö¸Êý£¬fieldÎª¼ÓÈ¨ºÏ³É·ÖÎöµÄÎïÀíÁ¿³¡£¬±ØÐëÎªÈýÎ¬±äÁ¿£¬µÚÈýÎ¬ÎªÊ±¼äÎ¬£¬alpha0ÊÇÍ³¼Æ¼ìÑé±ê×¼£¬Èç0.95±íÊ¾95%Í³¼Æ¼ìÑé
-%Êä³öÁ¿WCAÎªÈýÎ¬±äÁ¿£¬Ç°Á½Î¬ÓëÊäÈëµÄfieldÏàÍ¬£¬µÚÈýÎ¬Îª²»Í¬Òì³£½á¹û£¬ÕýÒì³£½á¹ûÎªWCA(:,:,1),¸ºÒì³£ÎªWCA(:,:,2)£¬ºÏ³É²îÎªWCA(:,:,3)
-%significanceÎªÏÔÖø¼ìÑé½á¹û£¬significance(:,:,1)ÎªÖÃÐÅÉÏ½ç£¬significance(:,:,2)ÎªÖÃÐÅÏÂ½ç,WCAÖµ¸ßÓÚÉÏ½ç»òµÍÓÚÏÂ½çµÄ¼´ÎªÍ¨¹ý¼ìÑé
+%è®¡ç®—åŠ æƒåˆæˆåˆ†æžçš„å‡½æ•°ï¼Œé‡‡ç”¨åŒä¾§è’™ç‰¹å¡æ´›æ£€éªŒ
+%å‡½æ•°å½¢å¼ [WCA significance]=wcomposite(index,field,alpha0)
+%å…¶ä¸­indexä¸ºä¸€ç»´æŒ‡æ•°ï¼Œfieldä¸ºåŠ æƒåˆæˆåˆ†æžçš„ç‰©ç†é‡åœºï¼Œå¿…é¡»ä¸ºä¸‰ç»´å˜é‡ï¼Œç¬¬ä¸‰ç»´ä¸ºæ—¶é—´ç»´ï¼Œ
+%alpha0æ˜¯ç»Ÿè®¡æ£€éªŒæ ‡å‡†ï¼Œå¦‚0.95è¡¨ç¤º95%ç»Ÿè®¡æ£€éªŒ,é»˜è®¤é‡‡ç”¨åŒä¾§æ£€éªŒï¼Œè’™ç‰¹å¡æ´›æ£€éªŒé‡‡ç”¨200ä¸ªæ ·æœ¬
+%è¾“å‡ºé‡WCAä¸ºä¸‰ç»´å˜é‡ï¼Œå‰ä¸¤ç»´ä¸Žè¾“å…¥çš„fieldç›¸åŒï¼Œç¬¬ä¸‰ç»´ä¸ºä¸åŒå¼‚å¸¸ç»“æžœï¼Œæ­£å¼‚å¸¸ç»“æžœä¸ºWCA(:,:,1),è´Ÿå¼‚å¸¸ä¸ºWCA(:,:,2)ï¼Œåˆæˆå·®ä¸ºWCA(:,:,3)
+%significanceä¸ºæ˜¾è‘—æ£€éªŒç»“æžœï¼Œsignificance(:,:,1)ä¸ºç½®ä¿¡ä¸Šç•Œï¼Œsignificance(:,:,2)ä¸ºç½®ä¿¡ä¸‹ç•Œ,WCAå€¼é«˜äºŽä¸Šç•Œæˆ–ä½ŽäºŽä¸‹ç•Œçš„å³ä¸ºé€šè¿‡æ£€éªŒ
 sizlen=size(x);
 if sizlen(1)==1
     x=x';
@@ -12,19 +13,21 @@ else
     sizlen=sizlen(1);
 end
 
-%Ë«²à¼ìÑé
-alpha0=alpha0/2;
+%åŒä¾§æ£€éªŒ,å•ä¾§æ£€éªŒéœ€æ³¨é‡Šä¸‹é¢çš„è¯­å¥
+%-----------------------
+alpha0=(1+alpha0)/2;
+%-----------------------
 
 sizy=size(y);
 siznum=3;
-%¼ÆËãºÏ³É½á¹û
+%è®¡ç®—åˆæˆç»“æžœ
 x_anomal=x-mean(x);
 y_mean=mean(y,siznum);
 y_anomal=y-repmat(y_mean,[ones(1,siznum-1) sizy(siznum)]);
 p=find(x_anomal>0);
 n=find(x_anomal<0);
 
-%differenceµÚÈýÎ¬·Ö±ðÎª£º1.positive part; 2.negative part; 3. differnece
+%differenceç¬¬ä¸‰ç»´åˆ†åˆ«ä¸ºï¼š1.positive part; 2.negative part; 3. differnece
 difference=nan(sizy(1),sizy(2),3);
 for k1=1:sizy(1)
     for k2=1:sizy(2)
@@ -34,12 +37,11 @@ for k1=1:sizy(1)
 end
 difference(:,:,3)=difference(:,:,1)-difference(:,:,2);
 
-%¼ÆËãÍ³¼Æ¼ìÑé
-N=200;%ÃÉÌØ¿¨ÂåËæ»úÊÔÑé´ÎÊý
+%è®¡ç®—ç»Ÿè®¡æ£€éªŒ
+N=200;%è’™ç‰¹å¡æ´›éšæœºè¯•éªŒæ¬¡æ•°
 diff_test=nan(sizy(1),sizy(2),N,3);
-%¼ÆËãËæ»úÐòÁÐµÄ¼ÓÈ¨ºÏ³É·ÖÎö½á¹û
+%è®¡ç®—éšæœºåºåˆ—çš„åŠ æƒåˆæˆåˆ†æžç»“æžœ
 for k=1:N
-%   k
   order=randperm(sizlen);
   x_test=x(order);
   x_test=x_test-mean(x_test);
@@ -52,7 +54,7 @@ for k=1:N
         end
     end
 end
-%¼ÆËã¼ìÑé±ê×¼
+%è®¡ç®—æ£€éªŒæ ‡å‡†
 diff_test(:,:,:,3)=diff_test(:,:,:,1)-diff_test(:,:,:,2);
 sigcrit=nan(sizy(1),sizy(2),3);
 for k=1:3
