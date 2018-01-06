@@ -51,7 +51,7 @@ copy_VarMeta(var_wca,wca)
 wca!2="mode"
 wca&mode=(/"positive","negative","difference"/)
 
-print("start test progress")
+print("test progress start")
 
 ;preset for MC test
 wca_set=new(array_append_record(dimsiz(0:1),(/3,samplesize/),0),typeof(var_wca),var_wca@_FillValue)
@@ -77,6 +77,8 @@ wca_set(:,:,1,i)=-dim_sum_Wrap(var_wca(:,:,ind_n)*w_multidim(:,:,ind_n))/totalwe
 wca_set(:,:,2,i)=wca_set(:,:,0,i)-wca_set(:,:,1,i)
 
 end do
+
+print("test progress end")
 
 ;-------------------obtain confidence interval-------------------------
 alpha=(1+alpha0)/2
