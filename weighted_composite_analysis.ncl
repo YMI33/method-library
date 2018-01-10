@@ -78,7 +78,6 @@ wca_set(:,:,2,i)=wca_set(:,:,0,i)-wca_set(:,:,1,i)
 
 end do
 
-print("test progress end")
 
 ;-------------------obtain confidence interval-------------------------
 alpha=(1+alpha0)/2
@@ -90,6 +89,7 @@ mc_test_array_ind=dim_pqsort(mc_test_array,2)
 ;-----------------------test WCA result---------------------------------
 mc_test=(wca.le.mc_test_array(:,:,:,boun_left)).or.(wca.ge.mc_test_array(:,:,:,boun_right))
 
+print("test progress end")
 
 return([/wca,mc_test/])
 
