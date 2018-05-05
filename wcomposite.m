@@ -61,11 +61,11 @@ for k=1:3
     for k1=1:sizy(1)
         for k2=1:sizy(2)
          diff_test_sig=sort(diff_test(k1,k2,:,k),3);
-         sigcrit1=diff_test_sig(1,1,floor(N*alpha0)+1);
-         sigcrit2=diff_test_sig(1,1,floor(N*(1-alpha0))-1);
-         if difference(k1,k2,k)<sigcrit1
+         sigcrit1=diff_test_sig(1,1,floor(N*alpha0)+1); %置信上界
+         sigcrit2=diff_test_sig(1,1,floor(N*(1-alpha0))-1); %置信下界
+         if difference(k1,k2,k)>sigcrit1
              sigcrit(k1,k2,k)=1;
-         elseif difference(k1,k2,k)>sigcrit2
+         elseif difference(k1,k2,k)<sigcrit2
              sigcrit(k1,k2,k)=1;
         end
     end
