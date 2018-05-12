@@ -2,7 +2,7 @@
 ;NCL script for weighted composite analysis (WCA), written by Xie Zhiang, 2017/9/6
 ;A NCL function for WCA with Mote Carlo two-tail test
 ;You can use the function by output=weighted_composite_analysis(index,field,N,alpha)
-:where index is an index used as standard to tell positive and negative event, 
+;where index is an index used as standard to tell positive and negative event, 
 ;field is a field ready for composition, which must be 3D variable and the rightmost dimension must be same as length of index
 ;N is the ensemble size of Mote Carlo test, 200 and above is recommended
 ;alpha is the significant level for test
