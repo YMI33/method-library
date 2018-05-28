@@ -47,7 +47,7 @@ wca(:,:,1)=-dim_sum_Wrap(var_wca(:,:,ind_n)*w_multidim(:,:,ind_n))/totalweight
 wca(:,:,2)=wca(:,:,0)-wca(:,:,1)
 
 
-copy_VarMeta(var_wca,wca)
+copy_VarMeta(var_wca(:,:,0),wca(:,:,0)) ;change by the suggestion from Dr. Majun Li
 wca!2="mode"
 wca&mode=(/"positive","negative","difference"/)
 
