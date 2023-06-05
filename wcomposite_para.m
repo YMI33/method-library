@@ -3,7 +3,7 @@ function [difference sigcrit]=wcomposite_para(x,y,alpha0)
 %函数形式 [WCA significance]=wcomposite(index,field,alpha0)
 %其中index为一维指数，field为加权合成分析的物理量场，必须为三维变量，第三维为时间维，alpha0是统计检验标准，如0.95表示95%统计检验
 %输出量WCA为三维变量，前两维与输入的field相同，第三维为不同异常结果，正异常结果为WCA(:,:,1),负异常为WCA(:,:,2)，合成差为WCA(:,:,3)
-%significance为显著检验结果，significance(:,:,1)为置信上界，significance(:,:,2)为置信下界,WCA值高于上界或低于下界的即为通过检验
+%significance维数与WCA相同，为显著检验结果,为1即该格点通过检验，为0则该格点未通过检验
 sizlen=size(x);
 if sizlen(1)==1
     x=x';
@@ -13,7 +13,7 @@ else
 end
 
 %双侧检验
-alpha0=(1+alpha0)/2.;
+alpha0=(1+alpha0)/2;
 
 sizy=size(y);
 siznum=3;
@@ -66,12 +66,12 @@ for k=1:3
     for k1=1:sizy(1)
         for k2=1:sizy(2)
          diff_test_sig=sort(diff_test(k1,k2,:,k),3);
-         sigcrit1=diff_test_sig(1,1,floor(N*alpha0)+1);
-         sigcrit2=diff_test_sig(1,1,floor(N*(1-alpha0))-1);
-         if difference(k1,k2,k)<sigcrit1
-             sigcrit(k1,k2,k)=sigcrit1;
-         elseif difference(k1,k2,k)>sigcrit2
-             sigcrit(k1,k2,k)=sigcrit2;
+         sigcrit1=diff_test_sig(1,1,floor(N*alpha0)+1); % upper bound
+         sigcrit2=diff_test_sig(1,1,floor(N*(1-alpha0))-1); % bottom bound
+         if difference(k1,k2,k)>sigcrit1
+             sigcrit(k1,k2,k)=1;
+         elseif difference(k1,k2,k)<sigcrit2
+             sigcrit(k1,k2,k)=1;
         end
     end
 end
