@@ -61,7 +61,7 @@ end
 diff_test(:,:,:,1)=diff_test_p;
 diff_test(:,:,:,2)=diff_test_n;
 diff_test(:,:,:,3)=diff_test(:,:,:,1)-diff_test(:,:,:,2);
-sigcrit=nan(sizy(1),sizy(2),3);
+sigcrit=zeros(sizy(1),sizy(2),3);
 for k=1:3
     for k1=1:sizy(1)
         for k2=1:sizy(2)
